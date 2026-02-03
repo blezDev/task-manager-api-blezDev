@@ -1,8 +1,14 @@
 const inputValidation = (req,res,next) => {
 
-    const {title, description, priorityLevel, taskState} = req.body;
+    const {title, description, priorityLevel, taskState,completed} = req.body;
 
     if(!title || !description || typeof title !== 'string' || typeof description !== 'string' ){
+        const err = new Error(`Provide correct input`)
+        err.statusCode = 400
+        throw err
+    }
+
+    if (!completed || typeof completed !== 'boolean') {
         const err = new Error(`Provide correct input`)
         err.statusCode = 400
         throw err
@@ -29,6 +35,8 @@ const inputValidation = (req,res,next) => {
         }
         req.body.priority = upperCaseTaskState
     }
+
+
 
     next()
 
